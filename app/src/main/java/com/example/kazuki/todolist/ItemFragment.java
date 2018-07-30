@@ -2,15 +2,16 @@ package com.example.kazuki.todolist;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kazuki.todolist.dummy.DummyContent;
-import com.example.kazuki.todolist.dummy.DummyContent.DummyItem;
+import com.example.kazuki.todolist.MyContent.DummyItem;
 
 public class ItemFragment extends Fragment {
 
@@ -26,12 +27,18 @@ public class ItemFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getInt(ARG_ITEM_ID);
+            Log.d("mItemd", String.valueOf(mItemId));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -48,7 +55,7 @@ public class ItemFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.getList(mItemId), mListener));
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MyContent.getList(mItemId), mListener));
         }
         return view;
     }

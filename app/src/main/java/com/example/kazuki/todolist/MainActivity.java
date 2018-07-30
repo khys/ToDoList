@@ -3,7 +3,7 @@ package com.example.kazuki.todolist;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.kazuki.todolist.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity
                 Menu.NONE, R.string.assignment)
                 .setIcon(R.drawable.assignment);
         navigationView.setNavigationItemSelectedListener(this);
+        //onNavigationItemSelected((MenuItem) findViewById(R.id.nav_all));
     }
 
     @Override
@@ -87,7 +86,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Bundle arguments = new Bundle();
-        arguments.putInt(ItemFragment.ARG_ITEM_ID, item.getOrder());
+        arguments.putInt(ItemFragment.ARG_ITEM_ID, item.getItemId());
+        Log.d("itemId", String.valueOf(item.getItemId()));
         ItemFragment fragment = new ItemFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(MyContent.DummyItem item) {
 
     }
 }

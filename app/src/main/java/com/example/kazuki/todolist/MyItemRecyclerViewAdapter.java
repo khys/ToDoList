@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kazuki.todolist.ItemFragment.OnListFragmentInteractionListener;
-import com.example.kazuki.todolist.dummy.DummyContent.DummyItem;
+import com.example.kazuki.todolist.MyContent.DummyItem;
 
 import java.util.List;
 
