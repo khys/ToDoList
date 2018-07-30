@@ -3,7 +3,7 @@ package com.example.kazuki.todolist;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
+import com.example.kazuki.todolist.MyDbContract.MyDbEntry;
 
 public class MyDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -34,11 +34,5 @@ public class MyDbHelper extends SQLiteOpenHelper {
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
-    }
-
-    private static class MyDbEntry implements BaseColumns {
-        private static final String TABLE_NAME = "entry";
-        private static final String COLUMN_NAME_TITLE = "item";
-        private static final String COLUMN_NAME_SUBTITLE = "label";
     }
 }

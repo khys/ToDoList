@@ -1,6 +1,10 @@
 package com.example.kazuki.todolist;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -13,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.example.kazuki.todolist.MyDbContract.MyDbEntry;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -99,7 +104,42 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(MyContent.DummyItem item) {
+    public void onListFragmentInteraction(MyContent.MyItem item) {
 
+    }
+
+    public void connectDb() {
+        String[] projection = {
+                BaseColumns._ID,
+                MyDbEntry.COLUMN_NAME_TITLE,
+                MyDbEntry.COLUMN_NAME_SUBTITLE
+        };
+
+        MyDbHelper mDbHelper = new MyDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        insertItem(db, "いつかやろう", R.id.nav_all);
+        insertItem(db, "そのうちやろう", R.id.nav_all);
+        insertItem(db, "今日中にやるべきこと", R.id.nav_day);
+        insertItem(db, "今月中にやるべきこと", R.id.nav_month);
+
+        Cursor cursor = db.query(MyDbEntry.TABLE_NAME, projection,
+                null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MyDbEntry._ID));
+            String item = cursor.getString(cursor.getColumnIndexOrThrow(MyDbEntry.COLUMN_NAME_TITLE));
+            int label = cursor.getInt(cursor.getColumnIndexOrThrow(MyDbEntry.COLUMN_NAME_SUBTITLE));
+            MyContent.addItem(MyContent.createMyItem(itemId, item, label));
+        }
+        cursor.close();
+    }
+
+    public long insertItem(SQLiteDatabase db, String item, int label) {
+        long newRowId;
+        ContentValues values = new ContentValues();
+        values.put(MyDbEntry.COLUMN_NAME_TITLE, item);
+        values.put(MyDbEntry.COLUMN_NAME_SUBTITLE, label);
+        newRowId = db.insert(MyDbEntry.TABLE_NAME, null, values);
+        return newRowId;
     }
 }
