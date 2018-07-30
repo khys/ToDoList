@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity
                 .setIcon(R.drawable.assignment);
         navigationView.setNavigationItemSelectedListener(this);
         //onNavigationItemSelected((MenuItem) findViewById(R.id.nav_all));
+
+        connectDb();
     }
 
     @Override
