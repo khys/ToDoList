@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kazuki.todolist.ItemFragment.OnListFragmentInteractionListener;
@@ -32,8 +34,21 @@ public class MyItemRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.valueOf(mValues.get(position).id));
         holder.mContentView.setText(mValues.get(position).content);
+        holder.mNumber.setText("0");
+
+        holder.mPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mNumber.setText(String.valueOf(Integer.valueOf(holder.mNumber.getText().toString()) + 1));
+            }
+        });
+        holder.mMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mNumber.setText(String.valueOf(Integer.valueOf(holder.mNumber.getText().toString()) - 1));
+            }
+        });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,15 +69,19 @@ public class MyItemRecyclerViewAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
         public MyItem mItem;
+        public ImageButton mPlusButton;
+        public ImageButton mMinusButton;
+        public TextView mNumber;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
+            mPlusButton = view.findViewById(R.id.button_plus);
+            mMinusButton = view.findViewById(R.id.button_minus);
+            mNumber = view.findViewById(R.id.number);
         }
 
         @Override

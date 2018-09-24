@@ -23,19 +23,21 @@ public class MyContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    public static MyItem createMyItem(long id, String content, int label) {
-        return new MyItem(id, content, label);
+    public static MyItem createMyItem(long id, String content, int label, int number) {
+        return new MyItem(id, content, label, number);
     }
 
     public static class MyItem {
         public final long id;
         public final String content;
         public final int label;
+        public final int number;
 
-        public MyItem(long id, String content, int label) {
+        public MyItem(long id, String content, int label, int number) {
             this.id = id;
             this.content = content;
             this.label = label;
+            this.number = number;
         }
 
         @Override

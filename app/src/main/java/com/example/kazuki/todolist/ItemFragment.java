@@ -25,7 +25,7 @@ public class ItemFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getInt(ARG_ITEM_ID);
-            Log.d("mItemd", String.valueOf(mItemId));
+            Log.d("mItemId", String.valueOf(mItemId));
         }
     }
 

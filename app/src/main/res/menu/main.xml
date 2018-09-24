@@ -3,8 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/sort_category"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/sort_category"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_number"
+        android:orderInCategory="100"
+        android:title="@string/sort_number"
         app:showAsAction="never" />
 </menu>

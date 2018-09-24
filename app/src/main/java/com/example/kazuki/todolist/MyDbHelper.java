@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.kazuki.todolist.MyDbContract.MyDbEntry;
 
 public class MyDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "MyItem.db";
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + MyDbEntry.TABLE_NAME + " (" +
                     MyDbEntry._ID + " INTEGER PRIMARY KEY," +
                     MyDbEntry.COLUMN_NAME_TITLE + " TEXT," +
-                    MyDbEntry.COLUMN_NAME_SUBTITLE + " INTEGER)";
+                    MyDbEntry.COLUMN_NAME_SUBTITLE + " INTEGER," +
+                    MyDbEntry.COLUMN_NAME_NUMBER + " INTEGER)";
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MyDbEntry.TABLE_NAME;
 

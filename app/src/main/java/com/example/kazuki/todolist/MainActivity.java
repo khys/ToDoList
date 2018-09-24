@@ -81,7 +81,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.sort_category) {
+            return true;
+        }
+        if (id == R.id.sort_number) {
             return true;
         }
 
@@ -114,16 +117,17 @@ public class MainActivity extends AppCompatActivity
         String[] projection = {
                 BaseColumns._ID,
                 MyDbEntry.COLUMN_NAME_TITLE,
-                MyDbEntry.COLUMN_NAME_SUBTITLE
+                MyDbEntry.COLUMN_NAME_SUBTITLE,
+                MyDbEntry.COLUMN_NAME_NUMBER
         };
 
         MyDbHelper mDbHelper = new MyDbHelper(getApplicationContext());
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        insertItem(db, "いつかやろう", R.id.nav_all);
-        insertItem(db, "そのうちやろう", R.id.nav_all);
-        insertItem(db, "今日中にやるべきこと", R.id.nav_day);
-        insertItem(db, "今月中にやるべきこと", R.id.nav_month);
+        insertItem(db, "いつかやろう", R.id.nav_all, 0);
+        insertItem(db, "そのうちやろう", R.id.nav_all, 0);
+        insertItem(db, "今日中にやるべきこと", R.id.nav_day, 0);
+        insertItem(db, "今月中にやるべきこと", R.id.nav_month, 0);
 
         Cursor cursor = db.query(MyDbEntry.TABLE_NAME, projection,
                 null, null, null, null, null);
@@ -131,16 +135,18 @@ public class MainActivity extends AppCompatActivity
             long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MyDbEntry._ID));
             String item = cursor.getString(cursor.getColumnIndexOrThrow(MyDbEntry.COLUMN_NAME_TITLE));
             int label = cursor.getInt(cursor.getColumnIndexOrThrow(MyDbEntry.COLUMN_NAME_SUBTITLE));
-            MyContent.addItem(MyContent.createMyItem(itemId, item, label));
+            int number = cursor.getInt(cursor.getColumnIndexOrThrow(MyDbEntry.COLUMN_NAME_NUMBER));
+            MyContent.addItem(MyContent.createMyItem(itemId, item, label, number));
         }
         cursor.close();
     }
 
-    public long insertItem(SQLiteDatabase db, String item, int label) {
+    public long insertItem(SQLiteDatabase db, String item, int label, int number) {
         long newRowId;
         ContentValues values = new ContentValues();
         values.put(MyDbEntry.COLUMN_NAME_TITLE, item);
         values.put(MyDbEntry.COLUMN_NAME_SUBTITLE, label);
+        values.put(MyDbEntry.COLUMN_NAME_NUMBER, number);
         newRowId = db.insert(MyDbEntry.TABLE_NAME, null, values);
         return newRowId;
     }
